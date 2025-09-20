@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dynamic Space Dark Theme */
+:root {
+  /* Space Theme Colors */
+  --space-bg-primary: #0a0a0f;
+  --space-bg-secondary: #1a1a2e;
+  --space-bg-tertiary: #16213e;
+  --space-accent-purple: #7c3aed;
+  --space-accent-blue: #3b82f6;
+  --space-accent-cyan: #06b6d4;
+  --space-accent-emerald: #10b981;
+  --space-accent-pink: #ec4899;
+
+  /* Nebula Colors */
+  --nebula-purple: rgba(124, 58, 237, 0.15);
+  --nebula-blue: rgba(59, 130, 246, 0.15);
+  --nebula-cyan: rgba(6, 182, 212, 0.15);
+  --nebula-emerald: rgba(16, 185, 129, 0.15);
+  --nebula-pink: rgba(236, 72, 153, 0.15);
+
+  /* Animation Durations */
+  --star-twinkle-duration: 3s;
+  --nebula-float-duration: 20s;
+  --gradient-shift-duration: 15s;
+}
+
+/* Base Space Theme */
+body {
+  @apply text-slate-100;
+  background: radial-gradient(ellipse at top, var(--space-bg-primary) 0%, var(--space-bg-secondary) 50%, var(--space-bg-tertiary) 100%);
+  background-attachment: fixed;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated Space Background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 160px 30px, rgba(255, 255, 255, 0.5), transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: twinkle var(--star-twinkle-duration) ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Nebula Effects */
+.nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  animation: float var(--nebula-float-duration) ease-in-out infinite;
+  pointer-events: none;
+}
+
+.nebula-1 {
+  width: 300px;
+  height: 300px;
+  background: var(--nebula-purple);
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.nebula-2 {
+  width: 400px;
+  height: 400px;
+  background: var(--nebula-blue);
+  top: 20%;
+  right: 15%;
+  animation-delay: -5s;
+}
+
+.nebula-3 {
+  width: 350px;
+  height: 350px;
+  background: var(--nebula-cyan);
+  bottom: 20%;
+  left: 20%;
+  animation-delay: -10s;
+}
+
+.nebula-4 {
+  width: 280px;
+  height: 280px;
+  background: var(--nebula-emerald);
+  bottom: 30%;
+  right: 20%;
+  animation-delay: -15s;
+}
+
+/* Dynamic Gradient Animation */
+.gradient-bg {
+  background: linear-gradient(-45deg,
+    var(--space-bg-primary),
+    var(--space-bg-secondary),
+    var(--space-bg-tertiary),
+    var(--space-accent-purple)
+  );
+  background-size: 400% 400%;
+  animation: gradientShift var(--gradient-shift-duration) ease infinite;
+}
+
+/* Enhanced Card Styles */
+.card {
+  @apply rounded-2xl p-6 shadow-lg;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Animations */
+@keyframes twinkle {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-20px) rotate(120deg);
+  }
+  66% {
+    transform: translateY(-10px) rotate(240deg);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .nebula {
+    filter: blur(60px);
+  }
+
+  .nebula-1, .nebula-2, .nebula-3, .nebula-4 {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .nebula,
+  body::before,
+  .gradient-bg {
+    animation: none;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}
