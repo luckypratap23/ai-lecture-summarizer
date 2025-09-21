@@ -22,7 +22,11 @@ if (missingEnvVars.length > 0) {
 
 console.log('✅ Environment variables validated successfully');
 
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true,
+  optionsSuccessStatus: 200
+}));
 app.use(express.json());
 
 // Request logging middleware

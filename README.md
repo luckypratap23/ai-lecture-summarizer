@@ -104,7 +104,7 @@ REACT_APP_API_BASE_URL=https://your-railway-backend-url.up.railway.app
 
 For local development, you can use:
 ```env
-REACT_APP_API_BASE_URL=http://localhost:4000
+REACT_APP_API_BASE_URL=https://ai-lecture-summarizer-backend-production.up.railway.app
 ```
 
 ### 5. Start the Application
