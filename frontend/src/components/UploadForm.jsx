@@ -1,5 +1,6 @@
 import React, { useRef, useState, useCallback } from 'react';
 import axios from 'axios';
+import { API_ENDPOINTS, apiConfig } from '../api';
 
 export default function UploadForm({ setTranscript, setSummary }) {
   const fileRef = useRef();
@@ -74,9 +75,8 @@ export default function UploadForm({ setTranscript, setSummary }) {
 
       console.log(`Uploading file: ${selectedFile.name}, Size: ${selectedFile.size} bytes, Type: ${selectedFile.type}`);
 
-      const res = await axios.post('http://localhost:4000/api/transcribe', fd, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        timeout: 300000, // 5 minute timeout for large files
+      const res = await axios.post(API_ENDPOINTS.transcribe, fd, {
+        ...apiConfig,
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
           setUploadProgress(percentCompleted);
@@ -91,7 +91,7 @@ export default function UploadForm({ setTranscript, setSummary }) {
       }
 
       console.log('Transcription completed, generating summary...');
-      const sres = await axios.post('http://localhost:4000/api/summarize', { transcript });
+      const sres = await axios.post(API_ENDPOINTS.summarize, { transcript });
       setSummary(sres.data.summary);
 
     } catch (err) {
@@ -105,7 +105,7 @@ export default function UploadForm({ setTranscript, setSummary }) {
         errorMessage = `${error}: ${details}`;
       } else if (err.request) {
         // Network error
-        errorMessage = 'Network error: Unable to connect to the server. Please ensure the backend server is running on port 4000.';
+        errorMessage = 'Network error: Unable to connect to the server. Please check your internet connection and try again.';
       } else if (err.code === 'ECONNABORTED') {
         errorMessage = 'Request timeout: The file is taking too long to process. Please try with a smaller file.';
       } else if (err.message) {

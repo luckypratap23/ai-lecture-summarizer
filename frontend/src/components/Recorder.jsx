@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import { API_ENDPOINTS, apiConfig } from '../api';
 
 export default function Recorder({ setTranscript, setSummary }) {
   const [recording, setRecording] = useState(false);
@@ -134,9 +135,12 @@ export default function Recorder({ setTranscript, setSummary }) {
 
       console.log(`Uploading recording: ${file.name}, Size: ${file.size} bytes`);
 
-      const res = await axios.post('http://localhost:4000/api/transcribe', fd, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        timeout: 300000
+      const res = await axios.post(API_ENDPOINTS.transcribe, fd, {
+        ...apiConfig,
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          console.log(`Upload progress: ${percentCompleted}%`);
+        }
       });
 
       const transcript = res.data.transcript || '';
@@ -147,7 +151,7 @@ export default function Recorder({ setTranscript, setSummary }) {
       }
 
       console.log('Transcription completed, generating summary...');
-      const sres = await axios.post('http://localhost:4000/api/summarize', { transcript });
+      const sres = await axios.post(API_ENDPOINTS.summarize, { transcript });
       setSummary(sres.data.summary);
 
     } catch (err) {
@@ -159,7 +163,7 @@ export default function Recorder({ setTranscript, setSummary }) {
         const { error, details } = err.response.data;
         errorMessage = `${error}: ${details}`;
       } else if (err.request) {
-        errorMessage = 'Network error: Unable to connect to the server. Please ensure the backend server is running.';
+        errorMessage = 'Network error: Unable to connect to the server. Please check your internet connection and try again.';
       } else if (err.message) {
         errorMessage = err.message;
       }

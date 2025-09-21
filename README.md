@@ -88,10 +88,23 @@ npm install
 ```
 
 ### 4. Environment Configuration
+
+#### Backend Configuration
 Create a `.env` file in the backend directory:
 ```env
 GEMINI_API_KEY=your_google_ai_api_key_here
 PORT=4000
+```
+
+#### Frontend Configuration
+Create a `.env` file in the frontend directory:
+```env
+REACT_APP_API_BASE_URL=https://your-railway-backend-url.up.railway.app
+```
+
+For local development, you can use:
+```env
+REACT_APP_API_BASE_URL=http://localhost:4000
 ```
 
 ### 5. Start the Application
@@ -101,7 +114,7 @@ PORT=4000
 cd backend
 npm start
 ```
-Server will run on `http://localhost:4000`
+Server will run on the configured backend URL (Railway for production, localhost:4000 for development)
 
 #### Frontend Development Server
 ```bash
@@ -139,9 +152,8 @@ Application will open at `http://localhost:5173`
 ## 🔌 API Documentation
 
 ### Base URL
-```
-http://localhost:4000/api
-```
+For development: `http://localhost:4000/api`
+For production: Uses the configured Railway backend URL (set via `REACT_APP_API_BASE_URL` environment variable)
 
 ### Endpoints
 
@@ -205,6 +217,7 @@ ai-lecture-summarizer/
 │   └── package.json        # Backend dependencies
 ├── frontend/               # React frontend
 │   ├── src/
+│   │   ├── api.js          # API configuration and endpoints
 │   │   ├── components/     # React components
 │   │   │   ├── Header.jsx  # Application header
 │   │   │   ├── UploadForm.jsx # File upload interface
@@ -215,6 +228,8 @@ ai-lecture-summarizer/
 │   │   ├── main.jsx       # Application entry point
 │   │   ├── App.css        # Component styles
 │   │   └── index.css      # Global styles
+│   ├── .env               # Environment variables
+│   ├── .env.example       # Environment variables template
 │   ├── index.html         # HTML template
 │   └── package.json       # Frontend dependencies
 ├── FIX_COMPLETED.md       # Recent fixes documentation
@@ -225,14 +240,16 @@ ai-lecture-summarizer/
 
 ## 🔧 Recent Fixes & Improvements
 
-### ✅ **File Upload Issues - COMPLETELY FIXED**
-- **Root Cause**: Frontend components accessing undefined summary data
-- **Solution**: Enhanced JSON parsing with fallback handling
+### ✅ **Deployment Configuration - COMPLETELY FIXED**
+- **Root Cause**: Frontend components hardcoded to `localhost:4000`
+- **Solution**: Implemented environment-based API configuration
 - **Files Modified**:
-  - `backend/routes/transcribe.js` - MIME type detection & validation
-  - `backend/routes/summarize.js` - Updated to use fixed AI client
-  - `backend/utils/geminiClient_fixed.js` - Robust error handling
-  - `frontend/src/components/SummaryCard.jsx` - Improved data display
+  - `frontend/.env` - Production Railway URL configuration
+  - `frontend/.env.example` - Environment template for developers
+  - `frontend/src/api.js` - Centralized API configuration
+  - `frontend/src/components/Recorder.jsx` - Updated to use API service
+  - `frontend/src/components/UploadForm.jsx` - Updated to use API service
+  - `README.md` - Updated documentation
 
 ### 🎨 **Dynamic Space Dark Theme**
 - **Features**: Animated star field, floating nebulas, particle effects
