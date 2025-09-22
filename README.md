@@ -10,7 +10,7 @@ A cutting-edge web application that transforms audio lectures into comprehensive
 
 ## 🚀 Live Demo
 
-[View Live Application](https://your-app-url.com) | [Watch Demo Video](https://your-demo-video.com)
+[View Live Application](https://ai-lecture-summarizer.netlify.app/)
 
 ## ✨ Key Features
 
@@ -294,8 +294,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact & Support
 
 - **Email**: your-email@example.com
-- **GitHub Issues**: [Report Issues](https://github.com/your-username/ai-lecture-summarizer/issues)
-- **Discussions**: [Join Discussion](https://github.com/your-username/ai-lecture-summarizer/discussions)
+- **GitHub Issues**: [Report Issues](https://github.com/luckypratap23/ai-lecture-summarizer/issues)
+- **Discussions**: [Join Discussion](https://github.com/luckypratap23/ai-lecture-summarizer/discussions)
 
 ## 🎯 Hackathon Features
 
